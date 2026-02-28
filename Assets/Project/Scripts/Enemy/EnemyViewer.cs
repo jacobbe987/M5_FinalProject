@@ -12,8 +12,8 @@ public class EnemyViewer : Enemy
     protected override void Start()
     {
         base.Start();
+        _rotate = StartCoroutine(Rotate());
         _currentState = EnemyState.State.Idle;
-        StartCoroutine(Rotate());
     }
 
     protected override void Idle()
@@ -28,7 +28,7 @@ public class EnemyViewer : Enemy
     {
         if (_rotate != null)
         {
-            StopCoroutine(Rotate());
+            StopCoroutine(_rotate);
             _rotate = null;
         }
         base.Chase();
@@ -36,10 +36,14 @@ public class EnemyViewer : Enemy
 
     private IEnumerator Rotate()
     {
-        yield return new WaitForSeconds(_rotateTimer);
-        if (_currentState == EnemyState.State.Idle )
+        while (_currentState == EnemyState.State.Idle)
         {
-            transform.Rotate(0, 180, 0);
+            yield return new WaitForSeconds(_rotateTimer);
+            if (_currentState == EnemyState.State.Idle)
+            {
+                transform.Rotate(0, 180, 0);
+            }
         }
+        _rotate = null;
     }
 }

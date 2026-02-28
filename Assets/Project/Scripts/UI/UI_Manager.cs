@@ -1,0 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+public class UI_Manager : MonoBehaviour
+{
+    [SerializeField] private TextMeshProUGUI _attemptsText;
+    [SerializeField] private GameObject _gameoverCanvas;
+
+    private void Start()
+    {
+        if (GameManager.Instance != null)
+        {
+            UpdateAttempts(GameManager.Instance.CurrentAttempts);
+        }
+    }
+
+    private void OnEnable()
+    {
+        GameManager.OnAttemptFailed += UpdateAttempts;
+        GameManager.OnGameOver += GameOverCanvas;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnAttemptFailed -= UpdateAttempts;
+        GameManager.OnGameOver -= GameOverCanvas;
+    }
+
+    private void UpdateAttempts(int attempts)
+    {
+        _attemptsText.text = "Attempts: " + attempts;
+    }
+
+    private void GameOverCanvas()
+    {
+        _gameoverCanvas.SetActive(true);
+    }
+}

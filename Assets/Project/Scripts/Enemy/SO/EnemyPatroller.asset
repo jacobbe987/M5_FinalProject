@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15aefd154e0d3524ebd1f61aa91e5864, type: 3}
-  m_Name: EnemyViewer
+  m_Name: EnemyPatroller
   m_EditorClassIdentifier: 
-  _viewDistance: 7
-  _viewAngle: 90
-  _moveSpeed: 3.5
+  _viewDistance: 5
+  _viewAngle: 85
+  _moveSpeed: 4
   _chaseSpeed: 4.5
   _limitDistance: 1.5

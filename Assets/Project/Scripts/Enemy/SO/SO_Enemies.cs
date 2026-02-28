@@ -11,7 +11,7 @@ public class SO_Enemies : ScriptableObject
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _chaseSpeed;
 
-    [SerializeField] private float _searchLimit;
+    [SerializeField] private float _limitDistance;
 
     public float ViewDistance => _viewDistance;
     public float ViewAngle => _viewAngle;
@@ -19,5 +19,5 @@ public class SO_Enemies : ScriptableObject
     public float MoveSpeed => _moveSpeed;
     public float ChaseSpeed => _chaseSpeed;
 
-    public float SearchLimit => _searchLimit;
+    public float LimitDistance => _limitDistance;
 }

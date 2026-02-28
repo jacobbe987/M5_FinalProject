@@ -10,6 +10,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected LayerMask _playerLayermask;
     [SerializeField] protected LayerMask _obstacleLayerMask;
 
+    [SerializeField] private LineRenderer _lineRenderer;
+    [SerializeField] private int _segments = 30;
+
     protected NavMeshAgent _agent;
     protected EnemyState.State _currentState;
     protected Transform _player;
@@ -24,6 +27,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
+        DrawVisionCone();
         CheckPlayer();
 
         switch (_currentState)
@@ -85,18 +89,53 @@ public class Enemy : MonoBehaviour
         _agent.speed = _data.ChaseSpeed;
         _agent.SetDestination(_player.position);
         _lastKnownPos = _player.position;
+
         if (!CanSeePlayer())
         {
             _currentState = EnemyState.State.Search;
+        }
+
+        if (Vector3.Distance(transform.position, _player.position) < _data.LimitDistance)
+        {
+            GameManager.Instance.PlayerCaptured();
         }
     }
     protected virtual void Search() 
     {
         _agent.speed = _data.MoveSpeed;
         _agent.SetDestination(_lastKnownPos);
-        if(Vector3.Distance(transform.position, _lastKnownPos)< _data.SearchLimit)
+        if(Vector3.Distance(transform.position, _lastKnownPos)< _data.LimitDistance)
         {
             _currentState=EnemyState.State.Idle;
+        }
+    }
+
+    private void DrawVisionCone()
+    {
+
+        int totalPoints = _segments + 2;
+        _lineRenderer.positionCount = totalPoints;
+        float angleStep = _data.ViewAngle / _segments;
+        float currentAngle = -_data.ViewAngle / 2f;
+
+        _lineRenderer.SetPosition(0, transform.position);
+
+        for (int i = 0; i <= _segments; i++)
+        {
+            Vector3 dir = Quaternion.Euler(0, currentAngle, 0) * transform.forward;
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(transform.position, dir, out hit, _data.ViewDistance, _obstacleLayerMask))
+            {
+                _lineRenderer.SetPosition(i + 1, hit.point);
+            }
+            else
+            {
+                _lineRenderer.SetPosition(i + 1, transform.position + dir * _data.ViewDistance);
+            }
+
+            currentAngle += angleStep;
         }
     }
 }
