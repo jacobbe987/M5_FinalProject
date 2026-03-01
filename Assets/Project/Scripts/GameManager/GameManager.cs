@@ -9,9 +9,7 @@ public class GameManager : MonoBehaviour
     public enum GameState
     {
         Playing,
-        GameOver,
-        Respawn,
-        AttemptFailed
+        Captured
     }
 
 
@@ -41,32 +39,12 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        _gameState = GameState.Playing;
+        
     }
 
     private void Start()
     {
         _currentAttempts = _maxAttempts;
-    }
-
-    private void Update()
-    {
-
-        switch (_gameState)
-        {
-            case GameState.GameOver:
-                GameOver();
-                break;
-
-            case GameState.Respawn:
-                Respawn();
-                break;
-
-            case GameState.AttemptFailed:
-                AttemptFailed();
-                break;
-
-        }
     }
 
     private void GameOver()
@@ -76,9 +54,10 @@ public class GameManager : MonoBehaviour
     }
     private void Respawn()
     {
-        _gameState= GameState.Playing;
+        _gameState = GameState.Playing;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
     private void AttemptFailed()
     {
         _currentAttempts--;
@@ -86,18 +65,20 @@ public class GameManager : MonoBehaviour
 
 
 
-        if ( _currentAttempts <= 0)
+        if ( _currentAttempts < 0)
         {
-            _gameState=GameState.GameOver;
+            GameOver();
         }
         else
         {
-            _gameState = GameState.Respawn;
+            Respawn();
         }
     }
 
     public void PlayerCaptured()
     {
-        _gameState = GameState.AttemptFailed;
+        _gameState = GameState.Captured;
+        AttemptFailed();
+        
     }
 }

@@ -97,7 +97,10 @@ public class Enemy : MonoBehaviour
 
         if (Vector3.Distance(transform.position, _player.position) < _data.LimitDistance)
         {
-            GameManager.Instance.PlayerCaptured();
+            if (GameManager.Instance._gameState == GameManager.GameState.Playing)
+            {
+                GameManager.Instance.PlayerCaptured();
+            }
         }
     }
     protected virtual void Search() 
