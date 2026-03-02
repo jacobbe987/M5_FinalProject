@@ -6,25 +6,21 @@ using UnityEngine;
 public class Button : MonoBehaviour, I_InteractableObj
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] private NavMeshSurface _navMeshSurface;
 
-    private bool _isOpen;
-    private bool _isClose;
+    private bool _isOpen = false;
     public void Interact()
     {
-        if(_isOpen)
+        if (_isOpen)
         {
             _animator.SetTrigger("_isClosing");
-            _navMeshSurface.BuildNavMesh();
-            _isOpen = false;
         }
-
-        if (_isClose)
+        else
         {
             _animator.SetTrigger("_isOpening");
-            _navMeshSurface.BuildNavMesh();
-            _isOpen = false;
         }
+
+        _isOpen = !_isOpen;
+        
     }
 
     public string InteractableText()
