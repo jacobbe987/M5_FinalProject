@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e588bd1acbfa84ea35518ba10aae7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxDistanceToInteraction: 5
+  _maxDistanceToInteraction: 6
   _interactionCanvas: {fileID: 0}
   _interactionText: {fileID: 0}
   _interactableLayer:
