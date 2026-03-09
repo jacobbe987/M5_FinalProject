@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _viewDistance: 22
   _viewAngle: 30
-  _moveSpeed: 3.5
-  _chaseSpeed: 4.5
-  _limitDistance: 1.5
+  _moveSpeed: 5
+  _chaseSpeed: 6
+  _limitDistance: 2

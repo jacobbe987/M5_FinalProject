@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     public static event Action<int> OnAttemptFailed;
     public static event Action OnGameOver;
+    public static event Action OnGameCompleted;
 
 
     private void Awake()
@@ -50,7 +51,13 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         OnGameOver?.Invoke();
-        SceneManager.LoadScene(0);
+        Time.timeScale = 0;
+    }
+
+    public void GameCompleted()
+    {
+        OnGameCompleted?.Invoke();
+        Time.timeScale = 0;
     }
     private void Respawn()
     {
@@ -65,7 +72,7 @@ public class GameManager : MonoBehaviour
 
 
 
-        if ( _currentAttempts < 0)
+        if ( _currentAttempts <= 0)
         {
             GameOver();
         }
@@ -80,5 +87,12 @@ public class GameManager : MonoBehaviour
         _gameState = GameState.Captured;
         AttemptFailed();
         
+    }
+
+    public void GameRestarted()
+    {
+        _currentAttempts = _maxAttempts;
+        _gameState = GameState.Playing;
+        Time.timeScale = 1;
     }
 }

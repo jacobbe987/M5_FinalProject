@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15aefd154e0d3524ebd1f61aa91e5864, type: 3}
   m_Name: EnemyPatroller
   m_EditorClassIdentifier: 
-  _viewDistance: 5
-  _viewAngle: 85
-  _moveSpeed: 4
-  _chaseSpeed: 4.5
-  _limitDistance: 1.5
+  _viewDistance: 12
+  _viewAngle: 35
+  _moveSpeed: 5
+  _chaseSpeed: 6
+  _limitDistance: 2

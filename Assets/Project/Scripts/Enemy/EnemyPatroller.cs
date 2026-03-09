@@ -20,7 +20,7 @@ public class EnemyPatroller : Enemy
 
     protected override void Patrol()
     {
-        if(!_agent.pathPending && _agent.remainingDistance < 0.2)
+        if(!_agent.pathPending && _agent.remainingDistance < 1)
         {
             _currentIndex = (_currentIndex + 1)% _waypointsArr.Length;
             _agent.SetDestination(_waypointsArr[_currentIndex].position);
